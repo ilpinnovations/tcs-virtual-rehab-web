@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="fav.ico">
+
+    <title>TCS Virtual ReHab</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="text" id="inputUserName" class="form-control" placeholder="User name" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signIn">Sign in</button>
+      </form>
+    </div>
+	<script src="js/jquery-3.2.1.min.js">></script>
+  </body>
+  
+  <script>
+	$(function() {
+		$('#signIn').click(function(){
+			var formData = new Object();
+			formData.u_id = $("#inputUserName").val();
+			formData.u_pass = $("#inputPassword").val();
+			$.ajax({
+				url : "user/login",
+				method : "POST",
+				data : formData,
+				success : function(data) {
+					if(data !== "Invalid") {
+						location.href = data;
+					} else {
+						
+					}
+				},
+				error : function(data) {
+					console.log("Login errir : "+data);
+				}
+			});
+			
+		});
+	});
+  </script>
+</html>

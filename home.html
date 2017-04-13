@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="fav.ico">
+
+    <title>TCS Virtual ReHab</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="#">TCS Virtual ReHab</a>
+			</div>
+			<ul class="nav navbar-nav">
+			  <li class="active" id="trails"><a href="#">Trails</a></li>
+			  <li id="feedbacks"><a href="#">Feedbacks</a></li>
+			</ul>
+		  </div>
+		</nav>
+		<div id="trailsDiv" >
+			<div class="col-md-6 col-md-offset-3">
+				<form>
+				  <div class="form-group">
+					<label for="childID">Child ID</label>
+					<input type="text" class="form-control" name="childID" id="childID"  placeholder="Child Id" required>
+				  </div>
+				  <div class="form-group">
+					<label for="childName">Child Name</label>
+					<input type="text" class="form-control" name="childName" id="childName" placeholder="Child Name" required>
+				  </div>
+				  <div class="form-group">
+					<label for="environment">Environment</label>
+					<select class="form-control" id="environment" name="environment" required>
+					  <option value="" selected disabled>Choose Environment</option>
+					  <option value="Cartoon">Cartoon</option>
+					  <option value="Beach">Beach</option>
+					  <option value="Garden">Garden</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+					<label for="theme">Theme</label>
+					<select class="form-control" id="theme" name="theme" required>
+					  <option value="" selected disabled>Choose Theme</option>
+					  <option value="Rainy">Rainy</option>
+					  <option value="Sunlight">Sunlight</option>
+					  <option value="Autum">Autum</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+					<label for="objects">Objects liked</label>
+					<select class="form-control" id="objects" name="objects" required>
+					  <option value="" selected disabled>Choose Objects liked</option>
+					  <option value="Toy">Toy</option>
+					  <option value="Butterfly">Butterfly</option>
+					  <option value="Flowers">Flowers</option>
+					</select>
+				  </div>
+				  <div class="form-group">
+					<label for="comments">Comments</label>
+					<textarea class="form-control" name="comments" id="comments" rows="10" required></textarea>
+				  </div>
+				  <!--<fieldset class="form-group">
+					<legend>Radio buttons</legend>
+					<div class="form-check">
+					  <label class="form-check-label">
+						<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+						Option one is this and that&mdash;be sure to include why it's great
+					  </label>
+					</div>
+					<div class="form-check">
+					<label class="form-check-label">
+						<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+						Option two can be something else and selecting it will deselect option one
+					  </label>
+					</div>
+					<div class="form-check disabled">
+					<label class="form-check-label">
+						<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+						Option three is disabled
+					  </label>
+					</div>
+				  </fieldset>
+				  <div class="form-check">
+					<label class="form-check-label">
+					  <input type="checkbox" class="form-check-input">
+					  Check me out
+					</label>
+				  </div>-->
+					<label class="btn btn-success">
+						<div class="file-field input-field">
+						<input id="files" type="file"  class="btn btn-danger" value="Select File" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">Upload file
+						</div>
+					</label>
+				  <button type="submit" class="pull-right btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+		<div id="feedbackDiv">
+			<div class="col-md-4 col-md-offset-3">
+				Choose a child from list
+				<div>
+					<select class="form-control" id="childIDList">
+					</select>
+				</div>
+				<div style="margin-top : 100px;">
+					<ul class="list-group" id="feedbacktrailsDiv"></ul>
+				</div>
+			</div>
+		</div>
+    </div>
+	
+	<div id="viewTrails" class="modal fade " role="dialog">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title"><span id="childNameInModal"></span>  Trail- <span id="childTrailNumber"></span></h4>
+			<h5 class="pull-right" id="c_code"></h5>
+		  </div>
+		  <div class="modal-body">
+			<form class="form-horizontal">
+				<div class="box-body">
+					<dl class="dl-horizontal">
+					  <dt>Child ID</dt>
+					  <dd id="c_id"></dd>
+					  <dt>Child Name</dt>
+					  <dd id="c_name"></dd>
+					  <dt>Environment</dt>
+					  <dd id="c_environment"></dd>
+					  <dt>Theme</dt>
+					  <dd id="c_theme"></dd>
+					  <dt>Objects liked</dt>
+					  <dd id="c_objects_liked"></dd>
+					  <dt>Comments</dt>
+					  <dd id="c_comments"></dd>
+					</dl>
+				</div>
+			</form>
+			<button><a id="downloadExcel" target='_blank'>Download csv</a></button>
+		</div>
+		</div>
+	  </div>
+	</div>
+	
+	<script src="js/jquery-3.2.1.min.js">></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+  
+  <script>
+	$(function() {
+		var feedBackData = new Object();
+		$("#feedbackDiv").hide();
+		$("#feedbacks").on('click',function(){
+			$("#feedbacktrailsDiv").html('');
+			$("#childIDList").html('');
+			$("#childIDList").append('<option value="" selected disabled>Child Id</option>');
+			$('#trails').removeClass('active');
+			$("#feedbacks").addClass('active');
+			$("#feedbackDiv").show();
+			$("#trailsDiv").hide();
+			$.ajax({
+				url: "/getTrails",
+				type: "GET",				
+				success: function(data) {
+					feedBackData = data;
+					for(var i=0;i<feedBackData.length;i++){
+						$("#childIDList").append("<option value='"+Object.keys(feedBackData[i])[0]+"'>"+Object.keys(feedBackData[i])[0]+"</option>");
+					}
+				},
+				error: function(error) {
+					alert("Wrong");
+				}
+			});
+			$('#childIDList').change(function(){
+				$("#feedbacktrailsDiv").html('');
+				var childID = $('#childIDList').val();
+				var trailDetails = new Array();
+				for(var i=0;i<feedBackData.length;i++){
+					if(Object.keys(feedBackData[i])[0] == childID) {
+						for(var j=0;j<feedBackData[i][childID].length;j++){
+							//alert(JSON.stringify(feedBackData[i][childID][j]));
+							trailDetails.push(feedBackData[i][childID][j]);
+							$("#feedbacktrailsDiv").append('<li class="trails list-group-item" id="'+j+'"><a style="cursor:pointer">Trail - '+(j+1)+'</a></li>');
+						}
+					}
+				}
+				
+				$('.trails').on('click',function(){
+					var id = $(this).attr('id');
+					$('#childNameInModal').text(trailDetails[id].childName);
+					$('#childTrailNumber').text(Number(id)+1);
+					$('#c_id').text(trailDetails[id].childID);
+					$('#c_name').text(trailDetails[id].childName);
+					$('#c_environment').text(trailDetails[id].environment);
+					$('#c_theme').text(trailDetails[id].theme);
+					$('#c_objects_liked').text(trailDetails[id].objects);
+					$('#c_comments').text(trailDetails[id].comments);
+					$('#c_code').text(trailDetails[id].code);
+					$('#downloadExcel').attr('href', "csv/"+trailDetails[id].childID+"/info.csv")
+					$('#viewTrails').modal('show');
+					
+				});
+			});
+			
+		});
+		$("#trails").on('click',function(){
+			$('#feedbacks').removeClass('active');
+			$("#trails").addClass('active');
+			$("#feedbackDiv").hide();
+			$("#trailsDiv").show();
+		});
+		/// CSV upload
+		$('#files').on('change',function(){
+			if($('#childID').val() != '' || $('#childID').val().length > 0) {
+				var formData = new Object();
+				var file = document.getElementById('files').files[0];
+				//alert(file);
+				if (file) {
+					// create reader
+					var reader = new FileReader();
+					reader.readAsBinaryString(file);
+					reader.onload = function(e) {
+						//alert(e.target.result);
+						formData.cID = $('#childID').val();
+						formData.file = e.target.result;
+						$.ajax({
+							url: "/fileUpload",
+							type: "POST",
+							data: JSON.stringify(formData),
+							contentType: "application/json",
+							success: function(data) {
+								alert("Uploaded csv");
+							},
+							error: function(error) {
+								alert("Wrong");
+							}
+						});
+					};
+				}
+			}
+			else {
+				alert("Please fill the child Id");
+			}
+			
+			
+		});
+		
+		//Form submit method
+		$("form").submit(function(e){
+			//collect form data in JSON object
+			var formData = {};
+			$(this).serializeArray().map(function(x) {
+				formData[x.name] = x.value;
+			});
+			var x,y,z;
+			switch($("#environment").val()){
+				case "Cartoon" : x=1;break;
+				case "Beach" : x=2;break;
+				case "Garden" : x=3;break;
+				default : x=0;
+			}
+			switch($("#theme").val()){
+				case "Rainy" : y=1;break;
+				case "Sunlight" : y=2;break;
+				case "Autum" : y=3;break;
+				default : y=0;
+			}
+			switch($("#objects").val()){
+				case "Toy" : z=1;break;
+				case "Butterfly" : z=2;break;
+				case "Flowers" : z=3;break;
+				default : z=0;
+			}
+			formData.code = formData.childID+'x'+x+'y'+y+'z'+z;
+			$.ajax({
+				url: "/trailSubmission",
+				type: "POST",
+				data: JSON.stringify(formData),
+				contentType: "application/json",
+				success: function(data) {
+					location.reload();
+				},
+				error: function(error) {
+					alert("Wrong");
+				}
+			});
+			
+			
+			
+		});
+		
+	});
+  </script>
+</html>
